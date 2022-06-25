@@ -14,7 +14,7 @@ CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
 
-cities = ('chicago', 'new york city', 'washington')
+# cities = ('chicago', 'new york city', 'washington')
 
 months = ('january', 'february', 'march', 'april', 'may', 'june', 'all')   
 
@@ -33,8 +33,9 @@ def get_filters():
     # get user input for city (chicago, new york city, washington).
 
     while True:
-          city = input("Please choose a city to review: Chicago, New York City, or Washington. \n>>> ").lower()
-          if city in cities:
+          city = input("\nPlease choose a city to review: Chicago, New York City, or Washington. \n>>> ").strip().lower()
+          if city in CITY_DATA:
+          # if city in cities:
               break
           else:
               print('Please choose a different city.')
@@ -44,7 +45,7 @@ def get_filters():
 
     while True:
             global month
-            month = input("Please choose a month between January and June or All. \n>>> ").lower()
+            month = input("Please choose a month between January and June or All. \n>>> ").lower().strip()
             if month in months:
                 break
             else:
@@ -54,7 +55,7 @@ def get_filters():
     # get user input for day of week (all, monday, tuesday, ... sunday)
 
     while True:
-            day = input("Please choose a day of the week (full name) or All. \n>>> ").lower()
+            day = input("Please choose a day of the week (full name) or All. \n>>> ").lower().strip()
             if day in days:
                 break
             else:
@@ -223,32 +224,38 @@ def display_data(df):
     """Asks for user input to determine if 5 rows of the Dataframe should be displayed.
     
     Continues to ask for user input until the user exits the function."""
+    # while True:
+    #     data_rows = input("Would you like to view 5 rows of data? (Yes or No)\n>>>").lower().stri()
+    #     if data_rows == 'yes':
+    #         row_start = 0
+    #         row_end = 5
+    #         rows = df.iloc[row_start:row_end]
+    #         print(rows)
+    #         break  
+    #     elif data_rows == 'no':
+    #         break
+    #     else:
+    #         print("Please try again.\n")
+    # if data_rows == 'yes':       
+    #         while True:
+    #             more_rows = input("Would you like to view 5 additional rows of data? (Yes or No)\n>>>").lower().strip()
+    #             if more_rows == 'yes':
+    #                 row_start += 5
+    #                 row_end += 5
+    #                 rows = df.iloc[row_start:row_end]
+    #                 print(rows)
+    #             elif data_rows == 'no':
+    #                 break
+    #             else:    
+    #                 print("Please try again.\n")  
+    #         else:
+    #             print("Please try again.\n")   
+                
     while True:
-        data_rows = input("Would you like to view 5 rows of data? (Yes or No)\n>>>").lower()
-        if data_rows == 'yes':
-            row_start = 0
-            row_end = 5
-            rows = df.iloc[row_start:row_end]
-            print(rows)
-            break  
-        elif data_rows == 'no':
+        print(df.sample(5))
+        view_more = input("Would you like to view 5 additional rows of data? (Yes or No) \n>>>").strip().lower()
+        if view_more != "yes":
             break
-        else:
-            print("Please try again.\n")
-    if data_rows == 'yes':       
-            while True:
-                more_rows = input("Would you like to view 5 additional rows of data? (Yes or No)\n>>>").lower()
-                if more_rows == 'yes':
-                    row_start += 5
-                    row_end += 5
-                    rows = df.iloc[row_start:row_end]
-                    print(rows)
-                elif data_rows == 'no':
-                    break
-                else:    
-                    print("Please try again.\n")  
-            else:
-                print("Please try again.\n")    
 
 def main():
     while True:
@@ -261,7 +268,7 @@ def main():
         user_stats(df)
         display_data(df)
 
-        restart = input('\nWould you like to restart? Enter yes or no.\n')
+        restart = input('\nWould you like to restart? (Yes or No) \n>>>').strip().lower()
         if restart.lower() != 'yes':
             break
 
